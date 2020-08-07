@@ -31,14 +31,14 @@ type singleList struct {
 	head *ele
 }
 
-func (this *singleList) AddFront(s string) {
-	e := &ele{name: s}
+func (this *singleList) AddFront(name string) {
+	ele := &ele{name: name}
 
 	if this.head == nil {
-		this.head = e
+		this.head = ele
 	} else {
-		e.next = this.head
-		this.head = e
+		ele.next = this.head
+		this.head = ele
 	}
 	this.len++
 }
@@ -63,7 +63,11 @@ func (this *singleList) RemoveFront() error {
 	if this.head == nil {
 		return errors.New("list is empty")
 	}
-	this.head = this.head.next
+	if this.head.next == nil {
+		this.head = nil
+	} else {
+		this.head = this.head.next
+	}
 	this.len--
 	return nil
 }
@@ -76,7 +80,7 @@ func (this *singleList) RemoveBack() error {
 		this.head = nil
 	} else {
 		var prev *ele
-		var current = this.head
+		current := this.head
 		for current.next != nil {
 			prev = current
 			current = current.next
